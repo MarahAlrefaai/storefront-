@@ -1,8 +1,8 @@
-const catigory =require('./Categories')
-const product =require('./products')
 import {createStore, combineReducers} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
-let reducers=combineReducers({reducers:catigory , reducers:product})
+import catigory from './Categories'
+import product from './products'
+let reducers=combineReducers({catigory , product})
 
 let store =()=>{
   return createStore(reducers , composeWithDevTools())
