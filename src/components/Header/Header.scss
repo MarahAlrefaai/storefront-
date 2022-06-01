@@ -1,5 +1,14 @@
 h1{
+  display: inline;
   text-align: center;
   font-family: Georgia, 'Times New Roman', Times, serif;
   background-color: rgba(206, 205, 205, 0.552);
+  margin-right: 80%;
+}
+.btnc{
+  background-color: white;
+  background-image:url('shopping-cart.png');
+  border-style: hidden ;
+  height: 60px;
+  width: 65px;
 }

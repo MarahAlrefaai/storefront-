@@ -1,6 +1,8 @@
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {  CardActionArea } from '@mui/material';
@@ -37,6 +39,10 @@ function Products (props){
             </Typography>
           </CardContent>
         </CardActionArea>
+        <CardActions>
+        <Button  onClick={() => props.addToCart(product)} size="small">Add to cart</Button>
+        <Button size="small">View Details</Button>
+      </CardActions>
       </Card>
        
        )
@@ -46,5 +52,8 @@ function Products (props){
  
   </> 
   )}
-  const mapStateToPrps=(state)=>({category: state.catigory.selectedCategory,product:state.product.Products})
+  const mapStateToPrps=(state)=>({
+    category: state.catigory.selectedCategory,
+    product:state.product.Products
+  })
   export default connect(mapStateToPrps)(Products);
