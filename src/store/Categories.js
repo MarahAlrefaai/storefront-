@@ -3,7 +3,7 @@ const initialState={
     {
       id : 1,
       name : "farms",
-      description :"You find in us the best beautiful and fruitful farms"
+      description :"You find with us the best beautiful and fruitful farms"
     },
     {
       id : 2,
@@ -18,10 +18,10 @@ const initialState={
   ],
   selectedCategory:{}
 }
-export default (state =initialState, action )=>{
+export default function categoryReduser(state =initialState, action ){
   switch (action.type){
     case 'CATEGORTY_SELECTED':
-let selectedCategory =state.category.find(category => category.id=== action.ppayload)
+let selectedCategory =state.category.find(category => category.id=== action.payload)
 return{
   ...state,
   selectedCategory:selectedCategory
