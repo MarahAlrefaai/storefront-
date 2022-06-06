@@ -1,10 +1,16 @@
 import './Header.scss'
-export default function Header (props){
+import{connect}from 'react-redux'
+  function Header (props){
+    
+    console.log("header")
+    console.log(props.countItems)
+   
   return(
   <>
   <h1>Store</h1>
-   {/* <img src="/shopping-cart.png"  alt="cart"  /> */}
-   <button className='btnc'></button>
-
+   <label > Cart: {props.countItems}</label> 
+   
   </>
   )}
+  const mapStateToProps=(state)=>({countItems:state.cart.countItems})
+  export default connect(mapStateToProps)(Header)
