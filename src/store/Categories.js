@@ -19,6 +19,7 @@ const initialState={
   selectedCategory:{}
 }
 export default function categoryReduser(state =initialState, action ){
+  
   switch (action.type){
     case 'CATEGORTY_SELECTED':
 let selectedCategory =state.category.find(category => category.id=== action.payload)
