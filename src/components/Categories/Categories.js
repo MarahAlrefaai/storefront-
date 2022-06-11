@@ -2,33 +2,51 @@ import './Categories.scss'
 //these imports for the design that i take it from the mui 
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import axios from 'axios';
+
 //=====================================================
-import {connect} from 'react-redux'
+import {connect,useSelector,useDispatch} from 'react-redux'
 import {useState,useEffect} from 'react'
-import {getSelectedCategory} from '../../store/Categories'
+
+import {getSelectedCategory,getRemoteData} from '../../store/Categories'
+
  function Categories (props){
-   const {category,getSelectedCategory}=props;//destructureing 
-   const [id,setId]=useState(1);
+  const dispatchData=useDispatch();//fire data  related with redux 
+
+ //console.log(props)
+   const {getSelectedCategory}=props;//destructureing 
+   const [dispalyName,setdispalyName]=useState(1);
+   useEffect(()=>{
+   console.log("dispalyName>>>>>>>>>   ",dispalyName)
+    getSelectedCategory(dispalyName)
+ 
+   },[dispalyName,getSelectedCategory])
    useEffect(()=>{
    
-    getSelectedCategory(id)
+    dispatchData(getRemoteData())
  
-   },[id,getSelectedCategory])
+   },[])
+   const newCategory=useSelector(state=>state.catigory.category);
+   //console.log("coponent>>>>>>>>>   ",newCategory)
 return(
 <>
 <ButtonGroup variant="text" aria-label="text button group">
-  <Button onClick={()=>{
-setId(1);
-  }}>farms</Button>
-  <Button onClick={()=>{
-setId(2);
-  }}>cars</Button>
-  <Button onClick={()=>{
-setId(3);
-  }} >dead sea products</Button>
+      {
+      
+      newCategory.map(category => {
+        console.log("Onclick : " ,category.dispalyName)
+          return (          
+            <Button key={category.id}  onClick={() =>{
+              setdispalyName(category);
+                }}>
+              {category.dispalyName}
+            </Button>
+          )
+        })
+        }
 </ButtonGroup>
-<h2>{category.selectedCategory?.name}</h2>
-<h6>{category.selectedCategory?.description}</h6>
+<h2>{props.category.selectedCategory?.dispalyName}</h2>
+<h6>{props.category.selectedCategory?.description}</h6>
 </>
 )}
 

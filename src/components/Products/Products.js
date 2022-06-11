@@ -6,12 +6,25 @@ import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import { connect } from 'react-redux'
 import { addToCart } from '../../store/Cart'
 import {decrementInventory}from '../../store/products'
+import {connect,useSelector,useDispatch} from 'react-redux'
+import {useEffect} from 'react'
+import {getRemoteProduct} from '../../store/products'
+import {getRemoteData} from '../../store/Categories'
 import './Products.scss';
 function Products(props) {
-  const { category, product } = props;
+  const newProduct=useSelector(state=>state.product.Products);
+const category=useSelector(state=>state.catigory.selectedCategory);
+  const dispatchData=useDispatch();//fire data  related with redux
+  useEffect(()=>{
+    dispatchData(getRemoteData())
+    dispatchData(getRemoteProduct())
+ 
+   },[])
+   
+  // const { category, product } = props;
+  //console.log("category ",category)
 function addCart(val){
   if(val?.inventoryCount>0){
     props.addToCart(val);
@@ -22,25 +35,36 @@ function addCart(val){
     alert("SOLED OUT")
   }
 }
+
+console.log("category",category)
+//console.log("newProduct",newProduct)
+/*  "categoryAssociation": "Food",
+            "displayName": "orange",
+            "description": "orange for eating",
+            "price": "15$",
+            "inventoryCount": 10,
+            "image": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg"*/
   return (
     <>
 
       <span  >
         {
-          product.map((product, i) => {
-            if (category?.id === product.categoryId) {
+          newProduct.map((product, i) => {
+            //console.log("outSide If : ",product)
+            if (category.dispalyName === product.categoryAssociation) {
+              console.log("inside If : ",product)
               return (
                 <Card key={i} sx={{ maxWidth: 345 }}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
                       height="140"
-                      image={product.img}
+                      image={product.image}
                       alt="green iguana"
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
-                        {product.name}
+                        {product.categoryAssociation}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         {product.description}

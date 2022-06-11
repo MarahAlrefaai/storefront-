@@ -1,41 +1,17 @@
+import axios from "axios";
 const initialState={
-  Products :  [
-    {
-      categoryId:1,
-      id : 1,
-      name : "al_aghwar farm",
-      description :"all green",
-      price:"$50000",
-      img:'https://image.shutterstock.com/image-photo/beautiful-sunset-rice-field-terrace-260nw-521146474.jpg',
-      inventoryCount:0
-    
-
-    },
-    {
-      categoryId:2,
-      id : 2,
-      name : "tesla car",
-      description :"amazing tesla car ",
-      price:"$15000",
-      img:'https://media.wired.com/photos/5a69231ef0e3ef5b52cd5e12/16:9/w_1631,h_917,c_limit/APCrashesII-FeatureArt.jpg',
-      inventoryCount:4
-    },
-    {
-      categoryId:3,
-      id : 3,
-      name : "Dead Sea Mud Soap Bloom",
-      description :"Shop Deep Sea Mud Mask ",
-      price:"$500",
-      img:'https://image.made-in-china.com/202f0j00mKdaZuEGCDpv/Private-Label-Dead-Sea-Mud-Mask-Products-Jordan.jpg',
-      inventoryCount:4
-
-    }
-  ]
+  Products :  []
 }
+let api="https://app-auth-obieda.herokuapp.com/api/v1/products";
 export default function productReduser(state =initialState, action ){
   switch (action.type){
   case 'GET_PRODUCT':
-    return state;
+
+
+    return {
+      Products:action.payload,
+  
+    };
     case 'DECREMENT_INVENTORY':
       let decArray=[...state.Products]
       let decItem=action.payload
@@ -58,4 +34,18 @@ export const decrementInventory = (item) => {
   };
 };
 
+export const getActionProduct = payload => {
+  console.log("payload ",payload)
+  return {
+      type: 'GET_PRODUCT',
+      payload: payload
+  }
+}
 
+export  const  getRemoteProduct=()=>{
+return async (dispatch) => {
+  const res = await axios.get(api);
+  console.log(res.data);
+  dispatch(getActionProduct(res.data));
+}
+  }

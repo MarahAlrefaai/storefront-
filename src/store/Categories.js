@@ -1,31 +1,31 @@
+import { useControlled } from "@mui/material";
+import axios from "axios";
+
+let api="https://app-auth-obieda.herokuapp.com/api/v1/categories";
+
 const initialState={
-  category :  [
-    {
-      id : 1,
-      name : "farms",
-      description :"You find with us the best beautiful and fruitful farms"
-    },
-    {
-      id : 2,
-      name : "cars",
-      description :"You will find with us the latest technologies and new versions of cars"
-    },
-    {
-      id : 3,
-      name : "dead sea products",
-      description :"Dead Sea products refers to cosmetic products based on materials extracted from the Dead Sea, such as salt, mud, and potash."
-    }
-  ],
-  selectedCategory:{}
+  category :  [],
+  selectedCategory:"",
+  categoryDescription:""
 }
 export default function categoryReduser(state =initialState, action ){
   
   switch (action.type){
+    case 'GET':
+            return {
+              category: action.payload,
+              selectedCategory: action.payload[0].dispalyName,           
+            };
+      
     case 'CATEGORTY_SELECTED':
-let selectedCategory =state.category.find(category => category.id=== action.payload)
+let selectedCategory =state.category.find(category => category.dispalyName === action.payload.dispalyName)
+console.log("selectedCategory ", selectedCategory)
+
 return{
-  ...state,
+  category:state.category,
   selectedCategory:selectedCategory
+
+
 }
 default: return state;
 
@@ -35,3 +35,20 @@ export const getSelectedCategory =(value)=>{
   return {type :'CATEGORTY_SELECTED',
 payload:value }
 }
+export const getAction = payload => {
+  // console.log("payload ",payload)
+  return {
+      type: 'GET',
+      payload: payload
+    
+  }
+}
+
+
+export  const  getRemoteData=()=>{
+return async (dispatch) => {
+  const res = await axios.get(api);
+  // console.log(res.data);
+  dispatch(getAction(res.data));
+}
+  }

@@ -2,8 +2,8 @@ import './Header.scss'
 import{connect}from 'react-redux'
   function Header (props){
     
-    console.log("header")
-    console.log(props.countItems)
+    // console.log("header")
+    // console.log(props.countItems)
    
   return(
   <>
